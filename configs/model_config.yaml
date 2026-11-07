@@ -1,0 +1,24 @@
+model:
+  name: "IndicSentM"
+  text_encoder:
+    name: "google/muril-base-cased"      # Alternates: "xlm-roberta-base", "ai4bharat/indic-bert"
+    freeze: false
+  vision_encoder:
+    name: "openai/clip-vit-base-patch32" # Alternates: "openai/clip-vit-large-patch14"
+    freeze: false
+  architecture:
+    hidden_dim: 512
+    num_heads: 8
+    dropout: 0.3
+    num_sentiment_classes: 3             # 0: Negative, 1: Neutral, 2: Positive
+    num_offensive_classes: 2             # 0: Non-Hate, 1: Hate/Offensive
+
+training:
+  batch_size: 32
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  max_epochs: 10
+  warmup_ratio: 0.1
+  max_text_seq_len: 128
+  image_size: 224
+

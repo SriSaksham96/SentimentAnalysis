@@ -1,0 +1,55 @@
+unified_schema:
+  target_columns: ["image_path", "ocr_text", "language", "sentiment", "offensive", "dataset_source"]
+
+splits:
+  train: 0.80
+  val: 0.10
+  test: 0.10
+  seed: 42
+  stratify_by: ["dataset_source", "sentiment"]
+
+datasets:
+  memotion:
+    raw_dir: "data/raw/memotion_3.0"
+    annotation_file: "memotion_labels.csv"
+    language_tag: "hinglish"
+    column_map:
+      image_name: "image_path"
+      text: "ocr_text"
+      sentiment: "sentiment"
+      offensive: "offensive"
+    sentiment_map:
+      positive: 2
+      neutral: 1
+      negative: 0
+    offensive_map:
+      not_offensive: 0
+      slight: 1
+      very_offensive: 1
+      hateful_offensive: 1
+
+  telmemood:
+    raw_dir: "data/raw/telmemood"
+    annotation_file: "telmemood_labels.csv"
+    language_tag: "telugu"
+    column_map:
+      img_id: "image_path"  # Requires .jpg appending in code if missing
+      ocr_text: "ocr_text"
+      sentiment_class: "sentiment"
+    sentiment_map:
+      positive: 2
+      neutral: 1
+      negative: 0
+
+  memosen:
+    raw_dir: "data/raw/memosen"
+    annotation_file: "memosen_labels.csv"
+    language_tag: "bengali"
+    column_map:
+      image_name: "image_path"
+      ocr_text: "ocr_text"
+      sentiment: "sentiment"
+    sentiment_map:
+      positive: 2
+      neutral: 1
+      negative: 0

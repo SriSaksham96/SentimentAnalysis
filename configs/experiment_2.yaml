@@ -1,0 +1,47 @@
+experiment:
+  name: "IndicSent-M_Experiment_2A"
+  description: "Corrected multimodal fusion with genuine visual pooling, attention-masked text pooling, frozen CLIP, differential learning rates, and gradient accumulation."
+
+model:
+  name: "IndicSentM"
+  text_encoder:
+    name: "google/muril-base-cased"
+    freeze: false
+    lr: 1.0e-5
+  vision_encoder:
+    name: "openai/clip-vit-base-patch32"
+    freeze: true
+    lr: 0.0
+  architecture:
+    hidden_dim: 512
+    num_heads: 8
+    dropout: 0.3
+    num_sentiment_classes: 3             # 0: Negative, 1: Neutral, 2: Positive
+    num_offensive_classes: 2             # 0: Non-Hate, 1: Hate/Offensive
+    fusion_lr: 2.0e-5
+
+data:
+  data_dir: "data/processed"
+  max_text_seq_len: 64                   # Covers 93.6% of samples; reduces padding overhead by 50%
+  image_size: 224
+  num_workers: 2
+
+training:
+  epochs: 5
+  batch_size: 4                          # Micro-batch size per forward step
+  gradient_accumulation_steps: 4         # Effective batch size = 4 * 4 = 16
+  fp16: true                             # Mixed precision training
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  max_grad_norm: 1.0
+  loss_weights:
+    sentiment: 1.0
+    offensive: 1.0
+  early_stopping:
+    enabled: true
+    patience: 3
+    metric: "selection_score"               # Language-balanced Sentiment Macro-F1: mean(hinglish_f1, bengali_f1)
+    mode: "max"
+  output_dir: "checkpoints/experiment_2a"
+  seed: 42
+

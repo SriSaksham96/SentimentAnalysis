@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large files and Archives
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+indicsent_project.zip
+
+# Checkpoints and Model weights
+checkpoints/
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+
+# Raw image datasets (exceeds GitHub file & repository limits)
+data/raw/*/images/
+data/raw/*/*/images/
+data/raw/memotion_3.0/Memotion 3/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+
+# OS artifacts
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
